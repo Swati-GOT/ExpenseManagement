@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import TodoList from './TodoList';
-import Dashboard from './dashboard';
 import Menu from './Pages/menu';
-import HomeComponent from './Pages/home';
 
 
 //import * as serviceWorker from './serviceWorker';
