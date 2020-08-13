@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router,Switch,NavLink,Link,Route} from 'react-router-dom'
+import {BrowserRouter as Router,Switch,Link,Route} from 'react-router-dom'
 import Header from './header'
 import Footer from './footer'
 import DashboardComponent from './dashboard'
@@ -10,7 +10,6 @@ import ViewCategory from './viewCategory'
 import GraphComponent from './graph'
 import CalculatorComponent from './calculator'
 import CurrencyConverter from './currencyConverter'
-import addExpense from './addExpense'
 import ViewExpense from './viewExpense'
 import AddExpense from './addExpense'
 
@@ -71,7 +70,7 @@ class Menu extends React.Component{
                             </li>
 
                             <li className="nav-item" >
-                            <Link className="nav-link " to={`/viewExpense`}  activeclassname="active"  >
+                            <Link className="nav-link " to={`/ViewExpense`}  activeclassname="active"  >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>View Expense</p>
                             </Link>
@@ -111,7 +110,7 @@ class Menu extends React.Component{
                                 <Route path="/addCategory" component={AddCategory}/>
                                 <Route path="/viewCategory" component={ViewCategory}/>
                                 <Route path="/addExpense" component={AddExpense}/>
-                                <Route path="/viewExpense" component={addExpense}/>
+                                <Route path="/viewExpense" component={ViewExpense}/>
                                 <Route path="/calculator" component={CalculatorComponent}/>
                                 <Route path="/currencyConverter" component={CurrencyConverter}/>
                                 <Route path="/graph" component={GraphComponent}/>

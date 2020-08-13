@@ -22,3 +22,9 @@ code {
   justify-content: center;
 } */
 
+.cardHeader{
+  justify-content: center;
+  display: flex;
+  background-color: #9595b5;
+}
+

@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './incomeComponent.css'
 
-class IncomeComponent extends React.Component{
+export default class IncomeComponent extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -9,15 +9,7 @@ class IncomeComponent extends React.Component{
            items:[]
         }
 
-        this.onHandleChange = this.onHandleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this)
-    }
-
-    onHandleChange = e =>{
-        const re = /^[0-9\b]+$/;
-        if (e.target.value === '' || re.test(e.target.value)) {
-            this.setState({amount: e.target.value})
-        }
     }
 
     handleSubmit =(event) =>{
@@ -30,8 +22,11 @@ class IncomeComponent extends React.Component{
         const data = new FormData(form)
         console.log("!!!!!",stringifyFormData(data))
         this.setState(prevState =>{
+            let count = prevState.items.length + 1
+            let newData  = stringifyFormData(data)
+            newData.id = count
             return{
-                items:prevState.items.concat(stringifyFormData(data)),
+                items:prevState.items.concat(newData),
                 invalid:false
             }
         },() => console.log("...........",this.state.items))
@@ -53,41 +48,76 @@ class IncomeComponent extends React.Component{
                         <div className="card-body card-content">
                             <form  onSubmit={this.handleSubmit}>
                                 <table>
-                                    <tr>
-                                        <td><label >Income Type: </label></td>
-                                        <td><input type="text" name="incomeType" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label >Amount</label></td>
-                                        <td><input type="text" pattern="\d+" name="amount"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <button >Add</button>
-                                            <button>View Income</button>
-                                        </td>
-                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td><label >Income Type: </label></td>
+                                            <td><input type="text" name="incomeType" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label >Amount</label></td>
+                                            <td><input type="text" pattern="\d+" name="amount"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button >Add</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </form>
                         </div>
                     </div>
                 </div>
-                {/* View Income Component */}
-                <div className="row">
-                    <div className="card">
-                        <div className="col-md-12">
-                            
-                        </div>
-                    </div>
-                </div>
+                    <ViewIncome entries = {this.state.items}/>
             </div>
         )
         
     }
 }
 
-export default IncomeComponent;
+function ViewIncome(props){
+    if(! (props.entries.length > 0)){
+        return null;
+    }
+
+    var items = props.entries
+    var listItems= items.map((item)=>{
+        return (
+            <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.incomeType}</td>
+                <td>{item.amount}</td>
+            </tr>
+        )
+    })
+
+    return(
+        <div className="row">
+        <div className="col-md-12">
+            <div className="card strpied-tabled-with-hover">
+                <div className="card-header ">
+                    <h4 className="card-title">Our Income</h4>
+                </div>
+                <div className="card-body table-full-width table-responsive">
+                    <table className="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                            <th>ID</th>
+                            <th>Income</th>
+                            <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {listItems}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    )
+}
 
 function stringifyFormData(fd) {
     const data = {};
