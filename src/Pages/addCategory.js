@@ -7,23 +7,27 @@ class AddCategory extends React.Component{
         super(props)
         
         this.state = {
+            items:[],
             categoryInfo:{
                 catName:'',
                 catDesc:'',
                 catId:''
             },
-            items:[]
+            
         }
+        console.log('Constructor intialized !!!!')
         this.baseState = this.state.categoryInfo
+        this.isEditable = false;
         
         this.handleOnChange = this.handleOnChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.resetInputFields = this.resetInputFields.bind(this)
+        this.pageTitle = '';
+        this.btnName = '';
     }
 
     handleSubmit =(e)=>{
         e.preventDefault();
-        //const history = useHistory();
         let catInfo = {
             ...this.state.categoryInfo,
                 catId:Date.now()
@@ -34,21 +38,53 @@ class AddCategory extends React.Component{
             }
         },() => {
             this.resetInputFields(); 
-            console.log(this.state.items)
-            //return  <Redirect  to="/viewCategory" />
-            this.props.history.push({
-                pathname:'/viewCategory',
-                data:this.state.items
-            });
+            console.log(typeof(this.state.items))
+            // this.props.history.push({
+            //     pathname:'/viewCategory',
+            //     state:{data:this.state.items}
+            // });
         })
+    }
 
-        
+    viewAllCategory(){
+        this.props.history.push({
+            pathname:'/viewCategory',
+            state:{data:this.state.items}
+        });
+    }
+
+    componentDidMount(){
+        const { match: { params } } = this.props;
+        if(params.id){
+            this.isEditable = true;
+            this.setState({
+                categoryInfo:this.props.location.state.data
+            })
+            this.pageTitle = 'Update Category'
+            this.btnName = 'Update'
+        }else{
+            this.setState({
+                categoryInfo:this.baseState
+            })
+            this.pageTitle = 'Add Category'
+            this.btnName = 'Add'
+        }
     }
 
     resetInputFields = () => {
         this.setState({
             categoryInfo:this.baseState
         })
+        // if(this.isEditable){
+        //     this.setState({
+        //         categoryInfo:this.props.location.state.data
+        //     })
+        // }else{
+        //     this.setState({
+        //         categoryInfo:this.baseState
+        //     })
+        // }
+        
      }
 
 
@@ -68,7 +104,7 @@ class AddCategory extends React.Component{
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-header cardHeader" style={{backgroundColor: 'rgb(219 208 232)'}}>
-                        <h4 className="card-title">Add Category</h4>
+                        <h4 className="card-title">{this.pageTitle}</h4>
                     </div>
                     <div className="card-body" >
                         <form onSubmit={this.handleSubmit}>
@@ -78,14 +114,19 @@ class AddCategory extends React.Component{
                                     <td><label >Category Name: </label></td>
                                     <td><input type="text" name="catName" value={this.state.categoryInfo.catName} onChange={this.handleOnChange}/></td>
                                 </tr>
+                                <tr><td></td></tr>
+                                <tr><td></td></tr>
                                 <tr>
                                     <td><label >Category Description:</label></td>
                                     <td><input type="text"  name="catDesc" value={this.state.categoryInfo.catDesc} onChange={this.handleOnChange}/></td>
                                 </tr>
+                                <tr><td></td></tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                    <button >Add</button>
+                                    <button >{this.btnName}</button>
+                                    <button onClick={()=>this.resetInputFields}>Cancel</button>
+                                    <button onClick={() =>this.viewAllCategory()}> View Category</button>
                                     </td>
                                 </tr>
                             </tbody>
