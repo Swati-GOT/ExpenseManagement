@@ -1,0 +1,26 @@
+const { DataTypes } = require('sequelize')
+
+module.exports = (sequelize) =>{
+    sequelize.define('category',{
+        id:{
+            allowNull: false,
+			autoIncrement: true,
+			primaryKey: true,
+			type: DataTypes.INTEGER
+        },
+        categoryName:{
+            type:DataTypes.STRING,
+            allowNull:false
+        },
+        categoryDesc:{
+            type:DataTypes.STRING,
+            allowNull:false
+        },
+        isDeleted:{
+            type:DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue:false
+        }
+    });
+}
+

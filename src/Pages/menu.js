@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router,Switch,Link,Route} from 'react-router-dom'
+import {BrowserRouter as Router,Switch,Link,Route,NavLink} from 'react-router-dom'
 import Header from './header'
 import Footer from './footer'
 import DashboardComponent from './dashboard'
@@ -28,73 +28,73 @@ class Menu extends React.Component{
                             </a> */}
                         </div>
                         <ul className="nav">
-                        <li className="nav-item">
-                            <Link className="nav-link"  to={`/`}  activeclassname="active">
+                        <li >
+                            <NavLink className="nav-link" exact activeClassName="navbar__link--active" to={`/`}  >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Dashboard</p>
-                            </Link>
+                            </NavLink>
                             </li>
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/todoList`}  activeclassname="active"  >
+                            {/* <li  >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/todoList`}    >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>TodoList</p>
-                            </Link>
-                            </li>
+                            </NavLink>
+                            </li> */}
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/income`}  activeclassname="active"  >
+                            <li  >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/income`}   >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Income</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/addCategory`}  activeclassname="active"  >
+                            <li  >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/addCategory`}    >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Add Category</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/viewCategory`}  activeclassname="active"  >
+                            <li  >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active"to={`/viewCategory`}  >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>View Category</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/addExpense`}  activeclassname="active"  >
+                            <li  >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/addExpense`}  >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Add Expense</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/ViewExpense`}  activeclassname="active"  >
+                            <li >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/ViewExpense`}   >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>View Expense</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/calculator`}  activeclassname="active"  >
+                            <li >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/calculator`}   >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Use Calculator</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/currencyConverter`}  activeclassname="active"  >
+                            <li >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active" to={`/currencyConverter`}   >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>Use Currency</p>
-                            </Link>
+                            </NavLink>
                             </li>
 
-                            <li className="nav-item" >
-                            <Link className="nav-link " to={`/graph`}  activeclassname="active"  >
+                            <li >
+                            <NavLink className="nav-link" activeClassName="navbar__link--active"to={`/graph`}  >
                                 <i className="nc-icon nc-chart-pie-35"></i>
                                 <p>View Graph</p>
-                            </Link>
+                            </NavLink>
                             </li>
                         </ul>
                     </div>
@@ -105,7 +105,7 @@ class Menu extends React.Component{
                             <div className="content">
                             <Switch>
                                 <Route exact path="/" component={DashboardComponent}/>
-                                <Route path="/todoList" component={TodoList}/>
+                                {/* <Route path="/todoList" component={TodoList}/> */}
                                 <Route path="/income" component={IncomeComponent}/>
                                 <Route path="/addCategory" component={AddCategory}/>
                                 <Route path="/viewCategory" component={ViewCategory}/>
@@ -114,6 +114,7 @@ class Menu extends React.Component{
                                 <Route path="/calculator" component={CalculatorComponent}/>
                                 <Route path="/currencyConverter" component={CurrencyConverter}/>
                                 <Route path="/graph" component={GraphComponent}/>
+                                <Route path="/updateCategory/:id" component={AddCategory}/>
                             </Switch>
                             
                             </div>  
@@ -127,3 +128,4 @@ class Menu extends React.Component{
 }
 
 export default Menu;
+
