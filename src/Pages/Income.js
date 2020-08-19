@@ -29,7 +29,7 @@ export default class IncomeComponent extends React.Component{
                 items:prevState.items.concat(newData),
                 invalid:false
             }
-        },() => console.log("...........",typeof(this.state.items)))
+        },() => console.log("...........",this.state.items))
 
         event.preventDefault();
         event.target.reset();

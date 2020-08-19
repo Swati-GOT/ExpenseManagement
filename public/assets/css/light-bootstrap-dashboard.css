@@ -476,43 +476,12 @@ body>.navbar-collapse .nav li.active .nav-link {
 }
 
 
-/* .sidebar .nav li.active .nav-link,
+.sidebar .nav li.active .nav-link,
 body>.navbar-collapse .nav li.nav-item a.active {
     color: #FFFFFF;
     opacity: 1;
     background: rgba(255, 255, 255, 0.23);
-} */
-
-/* .sidebar .nav li .nav-link
-body>.navbar-collapse .nav li .navbar__link {
-    color: #FFFFFF;
-    margin: 5px 15px;
-    opacity: .86;
-    border-radius: 4px;
-    display: block;
-    padding: 10px 15px;
 }
-
-.sidebar .nav li .nav-link i,
-body>.navbar-collapse .nav li .navbar__link i {
-    font-size: 28px;
-    margin-right: 15px;
-    width: 30px;
-    text-align: center;
-    vertical-align: middle;
-    float: left;
-}
-
-.navbar__link:hover {
-    background: rgba(255, 255, 255, 0.13);
-    opacity: 1;
-  } */
-
-.navbar__link--active {
-    color: #FFFFFF;
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.23);
-  }
 
 .sidebar .nav li.separator,
 body>.navbar-collapse .nav li.separator {
