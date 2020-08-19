@@ -3,6 +3,8 @@ const sequelize = new Sequelize('mysql://root:root@localhost:3306/expensedb')
 
 const modelDefiners = [
 	require('../common/models/income.model'),
+	require('../common/models/category.model'),
+	require('../common/models/expense.model'),
 ];
 
 // We define all models according to their files.

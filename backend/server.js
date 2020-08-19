@@ -1,7 +1,9 @@
-const express = require('express');
-const app = express();
-const sequelize = require('./config/dbConfig')
-const port = 3000;
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser')
+var sequelize = require('./config/dbConfig')
+
+var port = 3000;
 
 sequelize
     .authenticate()
@@ -18,6 +20,14 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Amz-Date, x-requested-with, authToken");
     next();
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+require('./routes')(app);
+
+
 
 
 

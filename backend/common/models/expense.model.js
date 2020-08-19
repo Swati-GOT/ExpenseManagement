@@ -8,6 +8,26 @@ module.exports = (sequelize) =>{
 			primaryKey: true,
 			type: DataTypes.INTEGER
         },
+        expenseDate:{
+            allowNull:false,
+            type:DataTypes.DATE
+        },
+        expenseAmount:{
+            allowNull:false,
+            type:DataTypes.INTEGER
+        },
+        epenseDesc:{
+            allowNull:false,
+            type:DataTypes.STRING
+        },
+        status:{
+            type:DataTypes.ENUM,
+            values:['Complete','Pending']
+        },
+        dueDate:{
+            allowNull:false,
+            type:DataTypes.DATE
+        }
         
     });
 }
