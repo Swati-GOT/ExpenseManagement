@@ -27,10 +27,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require('./routes')(app);
 
-
-
-
-
 app.listen(port, () => console.log(`app listening on port ${port}!`));
 
 exports = module.exports = app;

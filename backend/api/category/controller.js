@@ -21,5 +21,5 @@ category.viewCategory = async() =>{
     }
 }
 
-module.exports = income
+module.exports = category
 

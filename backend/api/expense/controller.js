@@ -21,5 +21,5 @@ expense.viewExpense = async() =>{
     }
 }
 
-module.exports = income
+module.exports = expense
 

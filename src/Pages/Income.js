@@ -1,9 +1,12 @@
 import React from 'react'
+import axios from 'axios'
 import './incomeComponent.css'
+import Configuration from '../common/configuration'
 
 export default class IncomeComponent extends React.Component{
     constructor(props){
         super(props)
+        this.config = new Configuration();
         this.state = {
            invalid:true,
            items:[]
@@ -12,28 +15,60 @@ export default class IncomeComponent extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentDidMount(){
+        this.getAllIncomes()
+    }
+
     handleSubmit =(event) =>{
         
         if(!event.target.checkValidity()){
             this.setState({invalid:true})
             return
         }
-        const form = event.target
-        const data = new FormData(form)
-        console.log("!!!!!",stringifyFormData(data))
-        this.setState(prevState =>{
-            let count = prevState.items.length + 1
-            let newData  = stringifyFormData(data)
-            newData.id = count
-            return{
-                items:prevState.items.concat(newData),
-                invalid:false
-            }
-        },() => console.log("...........",typeof(this.state.items)))
+        let form = event.target
+        let data = new FormData(form)
+        let newData  = stringifyFormData(data)
+        let options = {
+            url: `${this.config.API_URL}/income/add`,
+            method: this.config.METHOD_TYPE.POST,
+            headers: this.config.HEADERS,
+            data:newData
+        }
+
+        axios(options)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+                this.getAllIncomes()
+                
+            })
+       // });
+        // this.setState(prevState =>{
+        //     let count = prevState.items.length + 1
+        //     let newData  = stringifyFormData(data)
+        //     newData.id = count
+        //     return{
+        //         items:prevState.items.concat(newData),
+        //         invalid:false
+        //     }
+        // },() => console.log("...........",typeof(this.state.items)))
 
         event.preventDefault();
         event.target.reset();
     }
+
+    async getAllIncomes(){
+        axios.get(`${this.config.API_URL}/income/view`)
+        .then(res => {
+            // console.log(res);
+            // console.log(res.data);
+            this.setState({
+                items:res.data.data
+            })
+        })
+    }
+
+
 
     render(){
         return(
