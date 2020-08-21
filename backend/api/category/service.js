@@ -19,6 +19,15 @@ service.viewCategory = async(request,response) =>{
     }
 }
 
+service.updateCategory = async(request,response) =>{
+    try{
+        let result = await category.updateCategory(request.body,request.params.id)
+        sendResponse(200,result,'Data Created Sucessfully',response)
+    }catch(error){
+        sendResponse(500, error, 'Internal server error', response)
+    }
+}
+
 let sendResponse = (code, result,message, response) => {
     response.status(code).send({
         code: code,

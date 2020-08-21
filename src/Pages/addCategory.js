@@ -1,49 +1,62 @@
 import React from 'react'
-import { Redirect } from "react-router-dom";
+import axios from 'axios'
+import Configuration from '../common/configuration'
 
 class AddCategory extends React.Component{
-    
+
     constructor(props){
         super(props)
-        
+        this.config = new Configuration()
         this.state = {
             items:[],
             categoryInfo:{
-                catName:'',
-                catDesc:'',
-                catId:''
+                categoryName:'',
+                categoryDesc:'',
             },
-            
         }
         console.log('Constructor intialized !!!!')
         this.baseState = this.state.categoryInfo
         this.isEditable = false;
-        
+        this.id = ''
+        this.pageTitle = '';
+        this.btnName = '';
+
         this.handleOnChange = this.handleOnChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.resetInputFields = this.resetInputFields.bind(this)
-        this.pageTitle = '';
-        this.btnName = '';
+        
     }
 
     handleSubmit =(e)=>{
         e.preventDefault();
-        let catInfo = {
-            ...this.state.categoryInfo,
-                catId:Date.now()
+        if(this.isEditable){
+            this.updateCategory(this.id)
+        }else{
+            this.addCategory()
         }
-        this.setState((prevState)=>{
-            return {
-                items:prevState.items.concat(catInfo),
-            }
-        },() => {
-            this.resetInputFields(); 
-            console.log(typeof(this.state.items))
-            // this.props.history.push({
-            //     pathname:'/viewCategory',
-            //     state:{data:this.state.items}
-            // });
-        })
+        this.resetInputFields()
+    }
+
+    updateCategory(id){
+        let options = {
+            url: `${this.config.API_URL}/category/update/${id}`,
+            method: this.config.METHOD_TYPE.PUT,
+            headers: this.config.HEADERS,
+            data:this.state.categoryInfo
+        }
+        axios(options)
+        .then(res => {this.props.history.push({pathname:'/viewCategory'});})
+    }
+
+    addCategory(){
+        let options = {
+            url: `${this.config.API_URL}/category/add`,
+            method: this.config.METHOD_TYPE.POST,
+            headers: this.config.HEADERS,
+            data:this.state.categoryInfo
+        }
+        axios(options)
+        .then(res => {this.props.history.push({pathname:'/viewCategory'});})
     }
 
     viewAllCategory(){
@@ -60,6 +73,7 @@ class AddCategory extends React.Component{
             this.setState({
                 categoryInfo:this.props.location.state.data
             })
+            this.id = params.id
             this.pageTitle = 'Update Category'
             this.btnName = 'Update'
         }else{
@@ -75,16 +89,6 @@ class AddCategory extends React.Component{
         this.setState({
             categoryInfo:this.baseState
         })
-        // if(this.isEditable){
-        //     this.setState({
-        //         categoryInfo:this.props.location.state.data
-        //     })
-        // }else{
-        //     this.setState({
-        //         categoryInfo:this.baseState
-        //     })
-        // }
-        
      }
 
 
@@ -112,13 +116,13 @@ class AddCategory extends React.Component{
                             <tbody>
                                 <tr>
                                     <td><label >Category Name: </label></td>
-                                    <td><input type="text" name="catName" value={this.state.categoryInfo.catName} onChange={this.handleOnChange}/></td>
+                                    <td><input type="text" name="categoryName" value={this.state.categoryInfo.categoryName} onChange={this.handleOnChange}/></td>
                                 </tr>
                                 <tr><td></td></tr>
                                 <tr><td></td></tr>
                                 <tr>
                                     <td><label >Category Description:</label></td>
-                                    <td><input type="text"  name="catDesc" value={this.state.categoryInfo.catDesc} onChange={this.handleOnChange}/></td>
+                                    <td><input type="text"  name="categoryDesc" value={this.state.categoryInfo.categoryDesc} onChange={this.handleOnChange}/></td>
                                 </tr>
                                 <tr><td></td></tr>
                                 <tr>
@@ -126,7 +130,7 @@ class AddCategory extends React.Component{
                                     <td>
                                     <button >{this.btnName}</button>
                                     <button onClick={()=>this.resetInputFields}>Cancel</button>
-                                    <button onClick={() =>this.viewAllCategory()}> View Category</button>
+                                    {/* <button onClick={() =>this.viewAllCategory()}> View Category</button> */}
                                     </td>
                                 </tr>
                             </tbody>

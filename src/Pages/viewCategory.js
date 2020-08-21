@@ -1,29 +1,48 @@
 import React from 'react'
+import axios from 'axios'
+import Configuration from '../common/configuration'
 
 class ViewCategory extends React.Component{
 
     constructor(props){
         super(props)
+        this.config = new Configuration()
         this.handleClick = this.handleClick.bind(this)
+        this.state = {
+            items:[]
+        }
+    }
+
+    componentDidMount(){
+        this.getAllCategory();
+    }
+
+    async getAllCategory(){
+        let result = await axios.get(`${this.config.API_URL}/category/view`)
+        console.log("....",result)
+        this.setState({
+            items:result.data.data
+        })
+        
     }
 
     handleClick=(item)=>{
-        console.log("itemmmmmmm",item.catId)
+        console.log("itemmmmmmm",item.id)
         this.props.history.push({
-            pathname:`/updateCategory/${item.catId}`,
+            pathname:`/updateCategory/${item.id}`,
             state:{data:item}
         });
     }
 
     render(){
-        var  items = this.props.location.state.data
+        //var  items = this.props.location.state.data
         
-        var listItems= items.map((item)=>{
+        var listItems= this.state.items.map((item)=>{
             return (
-                <tr key={item.catId}>
-                    <td>{item.catId}</td>
-                    <td>{item.catName}</td>
-                    <td>{item.catDesc}</td>
+                <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.categoryName}</td>
+                    <td>{item.categoryDesc}</td>
                     <td onClick={()=> this.handleClick(item)}><label>Edit</label></td>
                     <td><label>delete</label></td>
                 </tr>
